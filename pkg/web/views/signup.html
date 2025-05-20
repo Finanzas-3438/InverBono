@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head><meta charset="UTF-8"><title>Registro</title></head>
+<body>
+  <h1>Crear nuevo usuario</h1>
+  <form id="signupForm">
+    <input type="text" name="username" id="username" placeholder="Usuario" required><br>
+    <input type="password" name="password" id="password" placeholder="Contraseña" required><br>
+    <select id="role">
+      <option value="cliente">Cliente</option>
+    </select><br><br>
+    <button type="submit">Registrarse</button>
+  </form>
+
+  <script>
+    document.getElementById("signupForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+      const role = document.getElementById("role").value;
+
+      const res = await fetch("/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password, role }),
+      });
+
+      if (res.ok) {
+        alert("Usuario creado con éxito. Ahora inicia sesión.");
+        window.location.href = "/";
+      } else {
+        alert("Error al registrar usuario.");
+      }
+    });
+  </script>
+</body>
+</html>

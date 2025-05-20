@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+</head>
+<body>
+  <h1>Iniciar sesión</h1>
+  <form id="loginForm">
+    <input type="text" name="username" id="username" placeholder="Usuario" required><br>
+    <input type="password" name="password" id="password" placeholder="Contraseña" required><br>
+    <button type="submit">Ingresar</button>
+  </form>
+
+  <br>
+
+  <button onclick="window.location.href='/signup'">Crear cuenta nueva</button>
+
+  <script>
+    document.getElementById("loginForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+
+      const res = await fetch("/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
+      });
+
+      if (res.redirected) {
+        window.location.href = res.url;
+      } else {
+        alert("Credenciales incorrectas.");
+      }
+    });
+  </script>
+</body>
+</html>
