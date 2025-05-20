@@ -17,6 +17,7 @@ func NewUser(username, password, role string) *User {
 
 func NewFakeUser() User {
 	return User{
+		ID:       1,
 		Username: "username",
 		Password: "password",
 		Role:     "admin",

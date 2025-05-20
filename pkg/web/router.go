@@ -12,6 +12,7 @@ import (
 	"github.com/Finanzas-3438/InverBono.git/pkg/web/handlers"
 	"github.com/Finanzas-3438/InverBono.git/pkg/web/middleware"
 
+	"github.com/gorilla/mux"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 
@@ -40,28 +41,45 @@ func StartServer() {
 		log.Fatalf("Error al conectar a SQLite con GORM: %v", err)
 	}
 
-	if err := db.AutoMigrate(&entities.User{}); err != nil {
-		log.Fatalf("Error al migrar tabla users: %v", err)
-	}
+	// Migraciones
+	db.AutoMigrate(&entities.User{}, &entities.Profile{})
 
-	repo := &repositories.UserRepoDB{DB: db}
-	authUseCase := usecases.NewAuthUseCase(repo, secret)
+	// Repositorios y casos de uso
+	userRepo := &repositories.UserRepoDB{DB: db}
+	profileRepo := &repositories.ProfileRepoDB{DB: db}
+
+	profileUseCase := usecases.NewProfileUseCase(profileRepo, userRepo)
+	authUseCase := usecases.NewAuthUseCase(userRepo, secret, profileRepo)
+
+	// Handlers
 	authHandler := handlers.NewAuthHandler(authUseCase)
+	profileHandler := handlers.NewProfileHandler(profileUseCase)
+
+	// Router principal
+	router := mux.NewRouter()
+
+	// Archivos estáticos (opcional)
+	router.PathPrefix("/static/").Handler(http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 
 	// Rutas públicas
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+	router.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, "pkg/web/views/login.html")
-	})
-	http.HandleFunc("/signup", authHandler.SignupHandler)
-	http.HandleFunc("/login", authHandler.LoginWithCookie(secret))
-	http.HandleFunc("/logout", authHandler.LogoutHandler)
+	}).Methods("GET")
 
-	// Ruta protegida
-	http.HandleFunc("/dashboard", middleware.JWTMiddlewareFromCookie(secret, handlers.DashboardHandler))
+	router.HandleFunc("/signup", authHandler.SignupHandler).Methods("POST")
+	router.HandleFunc("/login", authHandler.LoginWithCookie(secret)).Methods("POST")
+	router.HandleFunc("/logout", authHandler.LogoutHandler).Methods("POST")
 
-	// Iniciar servidor
-	log.Printf("Servidor escuchando en http://localhost%s\n", port)
-	if err := http.ListenAndServe(port, nil); err != nil {
+	// Ruta protegida simple
+	router.HandleFunc("/dashboard", middleware.JWTMiddlewareFromCookie(secret, handlers.DashboardHandler)).Methods("GET")
+	router.HandleFunc("/signup", authHandler.SignupHandler).Methods("GET", "POST")
+
+	// ✅ Nueva vista perfil basada en usuario autenticado
+	router.HandleFunc("/me", middleware.JWTMiddlewareFromCookie(secret, profileHandler.GetOwnProfile)).Methods("GET")
+
+	// Servidor
+	log.Printf("✅ Servidor escuchando en http://localhost%s", port)
+	if err := http.ListenAndServe(port, router); err != nil {
 		log.Fatalf("Error al iniciar servidor HTTP: %v", err)
 	}
 }

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Perfil de {{.FirstName}} {{.LastName}}</title>
+</head>
+<body>
+  <h1>Perfil de Usuario</h1>
+
+  <p><strong>Nombres:</strong> {{.FirstName}}</p>
+  <p><strong>Apellidos:</strong> {{.LastName}}</p>
+  <p><strong>Correo:</strong> {{.Email}}</p>
+  <p><strong>Teléfono:</strong> {{.Phone}}</p>
+
+  <a href="/dashboard">Volver al dashboard</a> |
+  <a href="/logout">Cerrar sesión</a>
+</body>
+</html>

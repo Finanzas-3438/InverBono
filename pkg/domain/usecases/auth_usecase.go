@@ -8,14 +8,16 @@ import (
 )
 
 type AuthUseCase struct {
-	UserRepo interfaces.UserRepository
-	Secret   string
+	UserRepo    interfaces.UserRepository
+	Secret      string
+	ProfileRepo interfaces.ProfileRepository
 }
 
-func NewAuthUseCase(repo interfaces.UserRepository, secret string) *AuthUseCase {
+func NewAuthUseCase(repo interfaces.UserRepository, secret string, profileRepo interfaces.ProfileRepository) *AuthUseCase {
 	return &AuthUseCase{
-		UserRepo: repo,
-		Secret:   secret,
+		UserRepo:    repo,
+		Secret:      secret,
+		ProfileRepo: profileRepo,
 	}
 }
 

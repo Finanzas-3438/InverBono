@@ -18,6 +18,6 @@ func (r *UserRepoDB) GetByUsername(username string) (*entities.User, error) {
 	return &user, nil
 }
 
-func (r *UserRepoDB) SaveUser(user entities.User) error {
-	return r.DB.Create(&user).Error
+func (r *UserRepoDB) SaveUser(user *entities.User) error {
+	return r.DB.Create(user).Error
 }
