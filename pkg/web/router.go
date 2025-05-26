@@ -24,6 +24,13 @@ const (
 	secret = "clave-secreta"
 )
 
+type Router struct {
+	*mux.Router
+	routes []string
+}
+
+type Handler func(w http.ResponseWriter, r *http.Request)
+
 func StartServer() {
 	if err := os.MkdirAll("data", os.ModePerm); err != nil {
 		log.Fatalf("Error creando carpeta data/: %v", err)
@@ -63,7 +70,7 @@ func StartServer() {
 
 	// Rutas públicas
 	router.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		http.ServeFile(w, r, "pkg/web/views/login.html")
+		http.ServeFile(w, r, "pkg/web/views/auth/login.html")
 	}).Methods("GET")
 
 	router.HandleFunc("/signup", authHandler.SignupHandler).Methods("POST")
@@ -82,4 +89,28 @@ func StartServer() {
 	if err := http.ListenAndServe(port, router); err != nil {
 		log.Fatalf("Error al iniciar servidor HTTP: %v", err)
 	}
+
+	r := Router{}
+	setupStaticRoutes(r)
+}
+
+func (r *Router) Static(route string, folder string) {
+	r.PathPrefix(route).Handler(http.StripPrefix(route, http.FileServer(http.Dir(folder))))
+}
+
+func (r *Router) Get(path string, h Handler) {
+	// path = "GET " + path
+	// r.AddRoute(path, h)
+	r.Router.HandleFunc(path, h).Methods(http.MethodGet)
+}
+
+func setupStaticRoutes(r Router) {
+	r.Static("/fonts", "public/fonts/")
+	r.Get("/js/app.js", Handler(handlers.MakeGzipHandler(handlers.AppJS)))
+	r.Get("/js/app.css", Handler(handlers.MakeGzipHandler(handlers.AppCSS)))
+	r.Static("/css", "public/css/")
+	r.Static("/img", "public/img/")
+	r.Static("/js", "public/js/")
+	r.Static("/favicon", "public/favicon/")
+	r.Static("/user_uploads", "storage/user_uploads/")
 }

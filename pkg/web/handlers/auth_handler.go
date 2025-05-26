@@ -71,7 +71,7 @@ func (h *AuthHandler) SignupHandler(w http.ResponseWriter, r *http.Request) {
 	r.ParseMultipartForm(10 << 20) // 10 MB límite de memoria para campos del form
 
 	if r.Method != http.MethodPost {
-		http.ServeFile(w, r, "pkg/web/views/signup.html")
+		http.ServeFile(w, r, "pkg/web/views/auth/signup.html")
 		return
 	}
 

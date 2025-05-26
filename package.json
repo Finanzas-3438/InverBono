@@ -22,7 +22,7 @@
     "watch-go": "air",
     "watch-js": "bun bun.config.js --watch",
     "build": "bun bun.config.js",
-    "dev": "concurrently \"bun watch-js\""
+    "dev": "concurrently \"bun watch-go\" \"bun watch-js\""
   },
   "dependencies": {
     "lenis": "^1.2.3"
