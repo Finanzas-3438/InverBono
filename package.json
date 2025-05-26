@@ -1,0 +1,30 @@
+{
+  "name": "InverBono",
+  "version": "0.0.0",
+  "type": "module",
+  "devDependencies": {
+    "@tailwindcss/aspect-ratio": "^0.4.2",
+    "@tailwindcss/container-queries": "^0.1.1",
+    "@tailwindcss/typography": "^0.5.16",
+    "@types/vue": "^2.0.0",
+    "@vue/tsconfig": "^0.7.0",
+    "@wemake/esbuild-plugin-postcss": "^1.0.2",
+    "autoprefixer": "^10.4.19",
+    "concurrently": "^8.2.2",
+    "esbuild": "^0.21.5",
+    "esbuild-plugin-vue3": "^0.4.2",
+    "postcss": "^8.4.38",
+    "postcss-scss": "^4.0.9",
+    "tailwindcss": "^3.4.4",
+    "vue": "^3.5.13"
+  },
+  "scripts": {
+    "watch-go": "air",
+    "watch-js": "bun bun.config.js --watch",
+    "build": "bun bun.config.js",
+    "dev": "concurrently \"bun watch-js\""
+  },
+  "dependencies": {
+    "lenis": "^1.2.3"
+  }
+}
