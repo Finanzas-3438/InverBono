@@ -1,15 +1,66 @@
-<form id="signupForm">
-  <input type="text" name="username" id="username" placeholder="Usuario" required><br>
-  <input type="password" name="password" id="password" placeholder="Contraseña" required><br>
-  <input type="text" name="first_name" id="first_name" placeholder="Nombres" required><br>
-  <input type="text" name="last_name" id="last_name" placeholder="Apellidos" required><br>
-  <input type="email" name="email" id="email" placeholder="Correo" required><br>
-  <input type="text" name="phone" id="phone" placeholder="Teléfono" required><br>
-  <select name="role" id="role">
-    <option value="cliente">Cliente</option>
-  </select><br><br>
-  <button type="submit">Registrarse</button>
-</form>
+<head>
+  <title>Login</title>
+  <meta charset="UTF-8">
+  <script src="/public/js/app.js"></script>
+  <link href="/public/js/app.css" rel="stylesheet" />
+  <link href="/public/css/app.css" rel="stylesheet" />
+  <link href="/public/ts/tailwind.css" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style type="text/css" media="screen">
+    /*  Add any custom styles  */
+  </style>
+</head>
+<main class="bg-neutral-900 h-screen flex">
+  <section class="w-1/2 flex flex-col justify-center items-center">
+    <div class="w-full max-w-md">
+      <h1 class="text-4xl font-bold text-white">Registrate</h1>
+      <form id="signupForm" class="space-y-3 mt-8">
+        <fieldset class="flex flex-col gap-1">
+          <label for="username" class="text-sm text-slate-300">Nombre de usuario<sup
+              class="text-red-500">*</sup></label>
+          <input class="p-2 outline-yellow-600 rounded-md bg-gray-50" type="text"
+            name="username" id="username" placeholder="Usuario" required autofocus>
+        </fieldset>
+        <fieldset class="flex flex-col gap-1">
+          <label for="password" class="text-sm text-slate-300">Contraseña<sup class="text-red-500">*</sup></label>
+          <input class="p-2 outline-yellow-600 rounded-md bg-gray-50" type="password"
+            name="password" id="password" placeholder="Contraseña" required>
+        </fieldset>
+        <div class="grid md:grid-cols-2 grid-cols-1 gap-4">
+          <fieldset class="flex flex-col gap-1">
+            <label for="first_name" class="text-sm text-slate-300">Nombre<sup class="text-red-500">*</sup></label>
+            <input class="p-2 outline-yellow-600 rounded-md bg-gray-50" type="text"
+              name="first_name" id="first_name" placeholder="Nombres" required>
+          </fieldset>
+          <fieldset class="flex flex-col gap-1">
+            <label for="last_name" class="text-sm text-slate-300">Apellido<sup class="text-red-500">*</sup></label>
+            <input class="p-2 outline-yellow-600 rounded-md bg-gray-50" type="text"
+              name="last_name" id="last_name" placeholder="Apellidos" required>
+          </fieldset>
+        </div>
+        <fieldset class="flex flex-col gap-1">
+          <label for="email" class="text-sm text-slate-300">Email<sup class="text-red-500">*</sup></label>
+          <input class="p-2 outline-yellow-600 rounded-md bg-gray-50" type="email" name="email"
+            id="email" placeholder="Correo" required>
+        </fieldset>
+        <fieldset class="flex flex-col gap-1">
+          <label for="phone" class="text-sm text-slate-300">Teléfono<sup class="text-red-500">*</sup></label>
+          <input class="p-2 outline-yellow-600 rounded-md bg-gray-50" type="text" name="phone"
+            id="phone" placeholder="Teléfono" required>
+        </fieldset>
+        <select name="role" id="role" class="hidden">
+          <option value="cliente">Cliente</option>
+        </select>
+      </form>
+      <button class="py-2 w-full text-lg bg-yellow-600 text-white font-semibold hover:bg-yellow-800 rounded-md mt-4 text-center" type="submit">Registrarse</button>
+      <p class="text-white font-light text-center mt-4">¿Ya tienes cuenta?<a href="/login" class="hover:underline text-yellow-300 font-medium ml-2">Inicia sesión</a></p>
+    </div>
+  </section>
+  <section class="bg-white h-full w-1/2 object-cover md:block hidden">
+
+  </section>
+</main>
 <script>
   document.getElementById("signupForm").addEventListener("submit", async function (e) {
     e.preventDefault();

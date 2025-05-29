@@ -5,30 +5,33 @@
   <meta charset="UTF-8">
 	<script src="/public/js/app.js"></script>
 	<link href="/public/js/app.css" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
   <style type="text/css" media="screen">
 	  /*  Add any custom styles  */
 	</style>
 </head>
 <body>
 
-  <main class="bg-slate-800 flex justify-center items-center">
-    <div class="bg-white rounded-lg p-6 border border-gray-500">
-      <h1>Iniciar sesión</h1>
-      <form id="loginForm">
-        <input type="text" name="username" id="username" placeholder="Usuario" required><br>
-        <input type="password" name="password" id="password" placeholder="Contraseña" required><br>
-        <button type="submit">Ingresar</button>
+  <main class="bg-neutral-900 flex flex-col justify-center items-center h-screen">
+    <div class="bg-white rounded-xl py-12 px-8 border border-gray-500 shadow-[0_0_20px_0px_rgb(250_204_21)] max-w-sm w-full">
+      <h1 class="text-4xl font-bold">Iniciar sesión</h1>
+      <form id="loginForm" class="mt-5 flex flex-col gap-2">
+        <fieldset class="flex flex-col gap-1">
+          <label class="text-sm text-slate-500" for="username">Nombre de usuario<sup class="text-red-500">*</sup></label>
+          <input class="p-2 outline-yellow-600 border border-slate-400 rounded-md bg-gray-50" type="text" name="username" id="username" placeholder="Usuario" required autofocus autocomplete="username">
+        </fieldset>
+        <fieldset class="flex flex-col gap-1 mt-1">
+          <label class="text-sm text-slate-500" for="password">Contraseña<sup class="text-red-500">*</sup></label>
+          <input class="p-2 outline-yellow-600 border border-slate-400 rounded-md bg-gray-50" type="password" name="password" id="password" placeholder="Contraseña" required autocomplete="current-password">
+        </fieldset>
+        <button class="w-full py-2 bg-yellow-600 text-white font-semibold hover:bg-yellow-800 rounded-md mt-4 text-center" type="submit">Ingresar</button>
       </form>
     </div>
+    <div class="text-center mt-6">
+      <p class="text-white font-light">¿No tienes una cuenta?</p>
+      <button class="font-medium text-yellow-300 hover:underline" onclick="window.location.href='/signup'">Registrate</button>
+    </div>
   </main>
-
-
-
-  
-
-  <button onclick="window.location.href='/signup'">Crear cuenta nueva</button>
-
-
 
   <script>
     document.getElementById("loginForm").addEventListener("submit", async function (e) {

@@ -8,3 +8,7 @@ body{
   font-style: normal;
 }
 
+.auth-input {
+  @apply p-2 outline-yellow-600 border border-slate-400 rounded-md bg-gray-50
+}
+
