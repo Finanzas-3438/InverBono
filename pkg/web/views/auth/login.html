@@ -1,35 +1,45 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <title>Login</title>
   <meta charset="UTF-8">
-	<script src="/public/js/app.js"></script>
-	<link href="/public/js/app.css" rel="stylesheet" />
+  <script src="/public/js/app.js"></script>
+  <link href="/public/js/app.css" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
   <style type="text/css" media="screen">
-	  /*  Add any custom styles  */
-	</style>
+    /*  Add any custom styles  */
+  </style>
+
+
 </head>
+
 <body>
 
   <main class="bg-neutral-900 flex flex-col justify-center items-center h-screen">
-    <div class="bg-white rounded-xl py-12 px-8 border border-gray-500 shadow-[0_0_20px_0px_rgb(250_204_21)] max-w-sm w-full">
+    <div
+      class="bg-white rounded-xl py-12 px-8 border border-gray-500 shadow-[0_0_20px_0px_rgb(250_204_21)] max-w-sm w-full">
       <h1 class="text-4xl font-bold">Iniciar sesión</h1>
       <form id="loginForm" class="mt-5 flex flex-col gap-2">
         <fieldset class="flex flex-col gap-1">
-          <label class="text-sm text-slate-500" for="username">Nombre de usuario<sup class="text-red-500">*</sup></label>
-          <input class="p-2 outline-yellow-600 border border-slate-400 rounded-md bg-gray-50" type="text" name="username" id="username" placeholder="Usuario" required autofocus autocomplete="username">
+          <label class="text-sm text-slate-500" for="username">Nombre de usuario<sup
+              class="text-red-500">*</sup></label>
+          <input class="p-2 outline-yellow-600 border border-slate-400 rounded-md bg-gray-50" type="text"
+            name="username" id="username" placeholder="Usuario" required autofocus autocomplete="username">
         </fieldset>
         <fieldset class="flex flex-col gap-1 mt-1">
           <label class="text-sm text-slate-500" for="password">Contraseña<sup class="text-red-500">*</sup></label>
-          <input class="p-2 outline-yellow-600 border border-slate-400 rounded-md bg-gray-50" type="password" name="password" id="password" placeholder="Contraseña" required autocomplete="current-password">
+          <input class="p-2 outline-yellow-600 border border-slate-400 rounded-md bg-gray-50" type="password"
+            name="password" id="password" placeholder="Contraseña" required autocomplete="current-password">
         </fieldset>
-        <button class="w-full py-2 bg-yellow-600 text-white font-semibold hover:bg-yellow-800 rounded-md mt-4 text-center" type="submit">Ingresar</button>
+        <button
+          class="w-full py-2 bg-yellow-600 text-white font-semibold hover:bg-yellow-800 rounded-md mt-4 text-center"
+          type="submit">Ingresar</button>
       </form>
     </div>
     <div class="text-center mt-6">
       <p class="text-white font-light">¿No tienes una cuenta?</p>
-      <button class="font-medium text-yellow-300 hover:underline" onclick="window.location.href='/signup'">Registrate</button>
+      <a href="/signup" class="font-medium text-yellow-300 hover:underline">Registrate</a>
     </div>
   </main>
 
@@ -53,5 +63,102 @@
       }
     });
   </script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      let overlay = document.createElement("div");
+      overlay.classList.add(
+        "bg-black",
+        "fixed",
+        "top-0",
+        "left-0",
+        "w-full",
+        "h-full",
+        "z-50",
+        "transition-transform",
+        "duration-300",
+        "ease-in-out"
+      );
+      overlay.style.transform = "translateX(-100%)";
+      overlay.style.opacity = "1";
+      
+      const textDisplay = document.createElement("div");
+      textDisplay.style.position = "absolute";
+      textDisplay.style.top = "50%";
+      textDisplay.style.left = "50%";
+      textDisplay.style.transform = "translate(-50%, -50%)";
+      textDisplay.style.color = "white";
+      textDisplay.style.fontSize = "4rem"; 
+      textDisplay.style.fontFamily = "monospace, sans-serif";
+      textDisplay.innerHTML = "";
+      overlay.appendChild(textDisplay);
+      
+      document.body.appendChild(overlay);
+
+      function typeTextEffect(textToType, element, charDelay, onComplete) {
+        let i = 0;
+        element.innerHTML = "";
+        function type() {
+          if (i < textToType.length) {
+            element.innerHTML += textToType.charAt(i);
+            i++;
+            setTimeout(type, charDelay);
+          } else {
+            if (onComplete) {
+              onComplete();
+            }
+          }
+        }
+        type();
+      }
+
+      document.querySelectorAll("a").forEach((el) => {
+        let href = el.getAttribute("href");
+        if (!href) return;
+
+        el.classList.add("cursor-pointer");
+
+        el.onclick = (e) => {
+          if (href.startsWith("#")) {
+            return;
+          }
+          const targetUrl = new URL(href, window.location.origin);
+          if (targetUrl.href === window.location.href) {
+            return;
+          }
+
+          if (targetUrl.origin === window.location.origin &&
+            targetUrl.pathname === window.location.pathname &&
+            targetUrl.search === window.location.search &&
+            targetUrl.hash !== "" && targetUrl.hash !== window.location.hash) {
+            return;
+          }
+
+          e.preventDefault();
+          textDisplay.innerHTML = "";
+          overlay.style.transform = "translateX(0%)"; 
+
+          setTimeout(() => {
+            const typingDelay = 150; 
+            typeTextEffect("InverBono", textDisplay, typingDelay, () => {
+              setTimeout(() => {
+                window.location.href = href;
+              }, 500); 
+            });
+          }, 300);
+        };
+      });
+
+      window.addEventListener('pageshow', function (event) {
+        overlay.style.transition = 'none';
+        overlay.style.transform = 'translateX(-100%)';
+        textDisplay.innerHTML = "";
+        setTimeout(() => {
+          overlay.style.transition = 'transform 0.3s ease-in-out';
+        }, 0);
+      });
+    });
+  </script>
 </body>
+
 </html>
