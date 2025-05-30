@@ -8,57 +8,72 @@
 
   <script src="https://cdn.tailwindcss.com"></script>
   <style type="text/css" media="screen">
-    /*  Add any custom styles  */
+    .register-input {
+      @apply p-2 outline-yellow-600 rounded-md bg-gray-700 border-2 border-gray-500
+    }
   </style>
 </head>
-<main class="bg-neutral-900 h-screen flex">
-  <section class="w-1/2 flex flex-col justify-center items-center">
+<main class="bg-neutral-800 h-screen md:flex">
+  <section class="md:w-1/2 flex flex-col justify-center items-center">
     <div class="w-full max-w-md">
-      <h1 class="text-4xl font-bold text-white">Registrate</h1>
-      <form id="signupForm" class="space-y-3 mt-8">
-        <fieldset class="flex flex-col gap-1">
-          <label for="username" class="text-sm text-slate-300">Nombre de usuario<sup
-              class="text-red-500">*</sup></label>
-          <input class="p-2 outline-yellow-600 rounded-md bg-gray-50" type="text"
-            name="username" id="username" placeholder="Usuario" required autofocus>
-        </fieldset>
-        <fieldset class="flex flex-col gap-1">
-          <label for="password" class="text-sm text-slate-300">Contraseña<sup class="text-red-500">*</sup></label>
-          <input class="p-2 outline-yellow-600 rounded-md bg-gray-50" type="password"
-            name="password" id="password" placeholder="Contraseña" required>
-        </fieldset>
+      <h2 class="text-4xl font-bold text-white">Registrate</h2>
+      <h3 class="font-light mt-2 text-white">Anota tus bonos de manera segura y eficiente.</h3>
+      <form id="signupForm" class="space-y-3 mt-7 text-white">
         <div class="grid md:grid-cols-2 grid-cols-1 gap-4">
           <fieldset class="flex flex-col gap-1">
-            <label for="first_name" class="text-sm text-slate-300">Nombre<sup class="text-red-500">*</sup></label>
-            <input class="p-2 outline-yellow-600 rounded-md bg-gray-50" type="text"
+            <label for="first_name" class="text-sm text-slate-400">Nombre<sup class="text-red-500">*</sup></label>
+            <input class="p-2 outline-yellow-600 rounded-md bg-gray-700 border-2 border-gray-500" type="text"
               name="first_name" id="first_name" placeholder="Nombres" required>
           </fieldset>
           <fieldset class="flex flex-col gap-1">
-            <label for="last_name" class="text-sm text-slate-300">Apellido<sup class="text-red-500">*</sup></label>
-            <input class="p-2 outline-yellow-600 rounded-md bg-gray-50" type="text"
+            <label for="last_name" class="text-sm text-slate-400">Apellido<sup class="text-red-500">*</sup></label>
+            <input class="p-2 outline-yellow-600 rounded-md bg-gray-700 border-2 border-gray-500" type="text"
               name="last_name" id="last_name" placeholder="Apellidos" required>
           </fieldset>
         </div>
         <fieldset class="flex flex-col gap-1">
-          <label for="email" class="text-sm text-slate-300">Email<sup class="text-red-500">*</sup></label>
-          <input class="p-2 outline-yellow-600 rounded-md bg-gray-50" type="email" name="email"
-            id="email" placeholder="Correo" required>
+          <label for="email" class="text-sm text-slate-400">Email<sup class="text-red-500">*</sup></label>
+          <input class="p-2 outline-yellow-600 rounded-md bg-gray-700 border-2 border-gray-500" type="email"
+            name="email" id="email" placeholder="Correo" required>
         </fieldset>
         <fieldset class="flex flex-col gap-1">
-          <label for="phone" class="text-sm text-slate-300">Teléfono<sup class="text-red-500">*</sup></label>
-          <input class="p-2 outline-yellow-600 rounded-md bg-gray-50" type="text" name="phone"
+          <label for="phone" class="text-sm text-slate-400">Teléfono<sup class="text-red-500">*</sup></label>
+          <input class="p-2 outline-yellow-600 rounded-md bg-gray-700 border-2 border-gray-500" type="text" name="phone"
             id="phone" placeholder="Teléfono" required>
         </fieldset>
+        <fieldset class="flex flex-col gap-1">
+          <label for="username" class="text-sm text-slate-400">Nombre de usuario<sup
+              class="text-red-500">*</sup></label>
+          <input class="p-2 outline-yellow-600 rounded-md bg-gray-700 border-2 border-gray-500" type="text"
+            name="username" id="username" placeholder="Usuario" required autofocus>
+        </fieldset>
+        <div>
+          <fieldset class="flex flex-col gap-1">
+            <label for="password" class="text-sm text-slate-400">Contraseña<sup class="text-red-500">*</sup></label>
+            <input class="p-2 outline-yellow-600 rounded-md bg-gray-700 border-2 border-gray-500" type="password"
+              name="password" id="password" placeholder="Contraseña" required>
+          </fieldset>
+          <div class="grid grid-cols-3 gap-1.5 mt-2.5">
+            <div id="strength-bar-1" class="h-1 rounded-full w-full bg-gray-500"></div>
+            <div id="strength-bar-2" class="h-1 rounded-full w-full bg-gray-500"></div>
+            <div id="strength-bar-3" class="h-1 rounded-full w-full bg-gray-500"></div>
+            <p id="password-strength-text" class="text-xs col-span-3 text-center text-slate-400">Ingrese una
+              contraseña</p>
+          </div>
+        </div>
         <select name="role" id="role" class="hidden">
           <option value="cliente">Cliente</option>
         </select>
       </form>
-      <button class="py-2 w-full text-lg bg-yellow-600 text-white font-semibold hover:bg-yellow-800 rounded-md mt-4 text-center" type="submit">Registrarse</button>
-      <p class="text-white font-light text-center mt-4">¿Ya tienes cuenta?<a href="/login" class="hover:underline text-yellow-300 font-medium ml-2">Inicia sesión</a></p>
+      <button
+        class="py-2 w-full text-lg bg-yellow-600 text-white font-semibold hover:bg-yellow-800 rounded-md mt-3 text-center"
+        type="submit">Registrarse</button>
+      <p class="text-white font-light text-center mt-4">¿Ya tienes cuenta?<a href="/"
+          class="hover:underline text-yellow-300 font-medium ml-2">Inicia sesión</a></p>
     </div>
   </section>
   <section class="bg-white h-full w-1/2 object-cover md:block hidden">
-
+    <img src="img/register-banner.jpg" alt="register banner" class="size-full">
   </section>
 </main>
 <script>
@@ -80,4 +95,87 @@
       alert("Error al registrar usuario.");
     }
   });
+
+  document.getElementById("signupForm").addEventListener("submit", async function (e) {
+    e.preventDefault();
+
+    const form = document.getElementById("signupForm");
+    const formData = new FormData(form);
+
+    const res = await fetch("/signup", {
+      method: "POST",
+      body: formData
+    });
+
+    if (res.ok) {
+      alert("Usuario creado con éxito. Ahora inicia sesión.");
+      window.location.href = "/";
+    } else {
+      alert("Error al registrar usuario.");
+    }
+  });
+
+  // Password strength validator script
+  document.addEventListener('DOMContentLoaded', function() {
+    const passwordInput = document.getElementById('password');
+    const strengthBar1 = document.getElementById('strength-bar-1');
+    const strengthBar2 = document.getElementById('strength-bar-2');
+    const strengthBar3 = document.getElementById('strength-bar-3');
+    const strengthText = document.getElementById('password-strength-text');
+
+    const barInactiveClass = 'h-1 rounded-full w-full bg-gray-500';
+    const bar1ActiveClass = 'h-1 rounded-full w-full bg-red-500';
+    const bar2ActiveClass = 'h-1 rounded-full w-full bg-yellow-600';
+    const bar3ActiveClass = 'h-1 rounded-full w-full bg-green-600';
+
+    const textNeutralClass = 'text-xs col-span-3 text-center mt-1 text-slate-400';
+    const textRedClass = 'text-xs col-span-3 text-center mt-1 text-red-500';
+    const textYellowClass = 'text-xs col-span-3 text-center mt-1 text-yellow-600';
+    const textGreenClass = 'text-xs col-span-3 text-center mt-1 text-green-600';
+
+    if (passwordInput && strengthBar1 && strengthBar2 && strengthBar3 && strengthText) {
+        passwordInput.addEventListener('input', function() {
+            const value = this.value;
+            let criteriaMet = 0;
+
+            const hasNumber = /\d/.test(value);
+            const hasUppercase = /[A-Z]/.test(value);
+            const hasMinLength = value.length >= 8;
+
+            if (hasNumber) criteriaMet++;
+            if (hasUppercase) criteriaMet++;
+            if (hasMinLength) criteriaMet++;
+
+            strengthBar1.className = barInactiveClass;
+            strengthBar2.className = barInactiveClass;
+            strengthBar3.className = barInactiveClass;
+
+            if (value.length === 0) {
+                strengthText.textContent = 'Ingrese una contraseña';
+                strengthText.className = textNeutralClass;
+            } else {
+                strengthBar1.className = bar1ActiveClass;
+
+                if (criteriaMet === 0) {
+                    strengthText.textContent = 'Muy insegura';
+                    strengthText.className = textRedClass;
+                } else if (criteriaMet === 1) {
+                    strengthText.textContent = 'Insegura';
+                    strengthText.className = textRedClass;
+                } else if (criteriaMet === 2) {
+                    strengthBar2.className = bar2ActiveClass;
+                    strengthText.textContent = 'Media';
+                    strengthText.className = textYellowClass;
+                } else if (criteriaMet === 3) {
+                    strengthBar2.className = bar2ActiveClass;
+                    strengthBar3.className = bar3ActiveClass;
+                    strengthText.textContent = 'Segura';
+                    strengthText.className = textGreenClass;
+                }
+            }
+        });
+    }
+  });
+
+
 </script>
